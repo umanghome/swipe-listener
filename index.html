@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+<body>
+  <div id="container">
+    Swipe Here
+  </div>
+  <div id="message"></div>
+  <script src="swipe-listener.min.js"></script>
+  <script>
+    let setMessage = function (msg) {
+      document.querySelector('#message').innerHTML = msg;
+    }
+
+    let container = document.querySelector('#container');
+    container.addEventListener('touchstart', function () {
+      setMessage('');
+    });
+
+    SwipeListener(container);
+
+    container.addEventListener('onswipe', function (e) {
+      var d = e.detail.directions;
+
+      if (d.top) {
+        if (d.right) {
+          setMessage('Swiped top-right.');
+        } else if (d.left) {
+          setMessage('Swiped top-left.');
+        } else {
+          setMessage('Swiped top.');
+        }
+      } else if (d.bottom) {
+        if (d.right) {
+          setMessage('Swiped bottom-right.');
+        } else if (d.left) {
+          setMessage('Swiped bottom-left.');
+        } else {
+          setMessage('Swiped bottom.');
+        }
+      } else {
+        if (d.right) {
+          setMessage('Swiped right.');
+        } else if (d.left) {
+          setMessage('Swiped left.');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

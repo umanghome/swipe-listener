@@ -1,0 +1,30 @@
+html, body, #container, #message {
+  height: 100%;
+  width: 100%;
+  overflow: none;
+  font-family: 'verdana';
+  letter-spacing: 1.1px;
+  text-align: center;
+}
+
+#container, #message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#container {
+  height: 90%;
+  font-size: 48px;
+  word-wrap: break-word;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+#message {
+  height: 10%;
+  color: white;
+  background: black;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  font-size: 18px;
+}
