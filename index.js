@@ -132,10 +132,8 @@ const SwipeListener = function (element, options) {
       directions.right ||
       directions.bottom ||
       directions.left) {
-      let xs = x[0],
-        xe = x[x.length - 1],
-        ys = y[0],
-        ye = y[y.length - 1];
+      const xs = x[0], xe = x[x.length - 1], // Start and end x-coords
+        ys = y[0], ye = y[y.length - 1];  // Start and end y-coords
 
       /**
       * If lockAxis is true, determine which axis to select.
@@ -154,8 +152,8 @@ const SwipeListener = function (element, options) {
       const eventData = {
         detail: {
           directions,
-          x: [xs, xe], // Start and end x-coords
-          y: [ys, ye] // Start and end y-coords
+          x: [xs, xe],
+          y: [ys, ye]
         }
       };
       
