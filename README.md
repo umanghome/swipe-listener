@@ -42,12 +42,19 @@ container.addEventListener('onswipe', function (e) {
     console.log('Swiped top-right.');
   }
 
+  if (directions.top && directions.left) {
+    console.log('Swiped top-left.');
+  }
+
+  if (directions.bottom && directions.right) {
+    console.log('Swiped bottom-right.');
+  }
+
   if (directions.bottom && directions.left) {
     console.log('Swiped bottom-left.');
   }
 
   console.log('Started horizontally at', x[0], 'and ended at', x[1]);
-
   console.log('Started vertically at', y[0], 'and ended at', y[1]);
 });
 ```
@@ -67,7 +74,7 @@ container.addEventListener('onswipe', function (e) {
 </script>
 ```
 
-Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@1.0.0/swipe-listener.min.js`](https://unpkg.com/swipe-listener@1.0.0/swipe-listener.min.js)
+Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@1.0.0/dist/swipe-listener.min.js`](https://unpkg.com/swipe-listener@1.0.0/dist/swipe-listener.min.js)
 
 ## Installing using NPM
 
@@ -102,7 +109,7 @@ Data passed to `event.detail`:
 - `x` (Array) Array containing two elements: starting and ending x-coords.
 - `y` (Array) Array containing two elements: starting and ending y-coords.
 
-Note that multiple directions can be `true` at one. In case of a top-left swipe, `directions.top` and `directions.left` will both be `true`.
+**Note that multiple directions can be `true` at one. In case of a top-left swipe, `directions.top` and `directions.left` will both be `true`.**
 
 ### Options
 
