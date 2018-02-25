@@ -31,7 +31,7 @@ var SwipeListener = function SwipeListener(element, options) {
     minHorizontal: 10, // Minimum number of pixels traveled to count as a horizontal swipe.
     minVertical: 10, // Minimum number of pixels traveled to count as a vertical swipe.
     deltaHorizontal: 3, // Delta for horizontal swipe
-    deltaVerical: 5 // Delta for vertical swipe
+    deltaVertical: 5 // Delta for vertical swipe
   };
 
   // Set options
@@ -110,13 +110,13 @@ var SwipeListener = function SwipeListener(element, options) {
       switch (swipe) {
         case 'top':
           _diff = Math.abs(min - y[y.length - 1]);
-          if (_diff <= options.deltaVerical) {
+          if (_diff <= options.deltaVertical) {
             directions.top = true;
           }
           break;
         case 'bottom':
           _diff = Math.abs(max - y[y.length - 1]);
-          if (_diff <= options.deltaVerical) {
+          if (_diff <= options.deltaVertical) {
             directions.bottom = true;
           }
           break;
