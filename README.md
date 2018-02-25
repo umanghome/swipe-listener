@@ -74,7 +74,7 @@ container.addEventListener('swipe', function (e) {
 </script>
 ```
 
-Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@1.0.1/dist/swipe-listener.min.js`](https://unpkg.com/swipe-listener@1.0.2/dist/swipe-listener.min.js)
+Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@latest/dist/swipe-listener.min.js`](https://unpkg.com/swipe-listener@latest/dist/swipe-listener.min.js)
 
 ## Installing using NPM
 
