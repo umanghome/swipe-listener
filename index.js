@@ -196,5 +196,3 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     window.SwipeListener = SwipeListener;
   }
 }
-
-console.log('test');
