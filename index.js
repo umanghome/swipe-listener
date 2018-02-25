@@ -28,7 +28,8 @@ const SwipeListener = function (element, options) {
     minVertical: 10, // Minimum number of pixels traveled to count as a vertical swipe.
     deltaHorizontal: 3, // Delta for horizontal swipe
     deltaVertical: 5, // Delta for vertical swipe
-    preventScroll: false // Prevents scrolling when swiping.
+    preventScroll: false, // Prevents scrolling when swiping.
+    lockAxis: false // Makes only one direction true (horizontal or vertical).
   };
 
   // Set options
@@ -131,11 +132,20 @@ const SwipeListener = function (element, options) {
       directions.right ||
       directions.bottom ||
       directions.left) {
+      const xs = x[0], xe = x[x.length - 1]; // Start and end x-coords
+      const ys = y[0], ye = y[y.length - 1]; // Start and end y-coords
+      if(options.lockAxis) {
+        if(Math.abs(xs - xe) > Math.abs(ys - ye)) { // is it horizontal axis?
+          directions.top = directions.bottom = false;
+        } else {
+          directions.left = directions.right = false;
+        }
+      }
       let event = new CustomEvent('swipe', {
         detail: {
           directions,
-          x: [x[0], x[x.length - 1]], // Start and end x-coords
-          y: [y[0], y[y.length - 1]] // Start and end y-coords
+          x: [xs, xe],
+          y: [ys, ye]
         }
       });
       element.dispatchEvent(event);
