@@ -145,19 +145,17 @@ const SwipeListener = function (element, options) {
       */
       if (options.lockAxis) {
         if ((directions.left || directions.right) && Math.abs(xs - xe) > Math.abs(ys - ye)) {
-          directions.top = false;
-          directions.bottom = false;
+          directions.top = directions.bottom = false;
         } else if ((directions.top || directions.bottom) && Math.abs(xs - xe) < Math.abs(ys - ye)) {
-          directions.left = false;
-          directions.right = false;
+          directions.left = directions.right =  false;
         }
       }
 
       const eventData = {
         detail: {
           directions,
-          x: [x[0], x[x.length - 1]], // Start and end x-coords
-          y: [y[0], y[y.length - 1]] // Start and end y-coords
+          x: [xs, xe], // Start and end x-coords
+          y: [ys, ye] // Start and end y-coords
         }
       };
       
