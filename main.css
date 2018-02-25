@@ -5,6 +5,8 @@ html, body, #container, #message {
   font-family: 'verdana';
   letter-spacing: 1.1px;
   text-align: center;
+  margin: 0;
+  cursor: default;
 }
 
 #container, #message {
