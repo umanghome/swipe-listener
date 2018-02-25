@@ -7,6 +7,9 @@
     "build": "babel index.js --out-file dist/swipe-listener.js --presets es2015 --plugins=transform-object-rest-spread && babel-minify dist/swipe-listener.js --out-file dist/swipe-listener.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+    "build"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/umanghome/swipe-listener.git"
@@ -31,6 +34,7 @@
     "babel-cli": "^6.26.0",
     "babel-minify": "^0.3.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-preset-es2015": "^6.24.1",
+    "pre-commit": "^1.2.2"
   }
 }
