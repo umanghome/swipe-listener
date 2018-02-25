@@ -74,7 +74,7 @@ container.addEventListener('swipe', function (e) {
 </script>
 ```
 
-Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@1.0.1/dist/swipe-listener.min.js`](https://unpkg.com/swipe-listener@1.0.1/dist/swipe-listener.min.js)
+Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@1.0.1/dist/swipe-listener.min.js`](https://unpkg.com/swipe-listener@1.0.2/dist/swipe-listener.min.js)
 
 ## Installing using NPM
 
@@ -119,6 +119,7 @@ Data passed to `event.detail`:
 | `minVertical` | Minimum number of vertical pixels travelled for the gesture to be considered as a top or bottom swipe. | `10` |
 | `deltaHorizontal` | Maximum difference between the rightmost pixel (right-swipe) or the leftmost pixel (left-swipe) travelled to and the pixel at which the gesture is released. | `3` |
 | `deltaVertical` | Maximum difference between the bottommost pixel (bottom-swipe) or the topmost pixel (top-swipe) travelled to and the pixel at which the gesture is released. | `5` |
+| `preventScroll` | Prevents page scrolling when swiping on the DOM element. | `false` |
 
 ### `.off()`
 
