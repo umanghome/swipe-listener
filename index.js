@@ -3,6 +3,7 @@
  * emits `onswipe` event when a swipe gesture is performed.
  * @param {DOMElement} element Element on which to listen for swipe gestures.
  * @param {Object} options Optional: Options.
+ * @return {Object}
  */
 const SwipeListener = function (element, options) {
   if (!element) return;
@@ -38,52 +39,11 @@ const SwipeListener = function (element, options) {
     ...options
   };
 
-  /**
-   * Returns the minimum value from the array.
-   * @param {Array} arr 
-   * @return {Any}
-   */
-  function findMin (arr) {
-    if (!arr || !arr.length) return;
-    let m = arr[0];
-    for (let i = 1; i < arr.length; i++) {
-      if (arr[i] < m) {
-        m = arr[i];
-      }
-    }
-    return m;
-  }
-
-  /**
-   * Returns the maximum value from the array.
-   * @param {Array} arr 
-   * @return {Any}
-   */
-  function findMax (arr) {
-    if (!arr || !arr.length) return;
-    let m = arr[0];
-    for (let i = 1; i < arr.length; i++) {
-      if (arr[i] > m) {
-        m = arr[i];
-      }
-    }
-    return m;
-  }
-
   // Store the touches
   let touches = [];
 
-  // When a swipe is performed, store the coords.
-  element.addEventListener('touchmove', function (e) {
-    let touch = e.changedTouches[0];
-    touches.push({
-      x: touch.clientX,
-      y: touch.clientY
-    });
-  });
-
   // When the swipe is completed, calculate the direction.
-  element.addEventListener('touchend', function (e) {
+  const _touchend = function(e) {
     if (!touches.length) return;
 
     let x = [];
@@ -110,8 +70,8 @@ const SwipeListener = function (element, options) {
       swipe = 'right';
     }
 
-    let min = findMin(x),
-      max = findMax(x),
+    let min = Math.min(...x),
+      max = Math.max(...x),
       _diff;
 
     // If minimum horizontal distance was travelled
@@ -141,8 +101,8 @@ const SwipeListener = function (element, options) {
       swipe = 'bottom';
     }
 
-    min = findMin(y);
-    max = findMax(y);
+    min = Math.min(...y);
+    max = Math.max(...y);
 
     // If minimum vertical distance was travelled
     if (Math.abs(diff) >= options.minVertical) {
@@ -170,16 +130,35 @@ const SwipeListener = function (element, options) {
       directions.right ||
       directions.bottom ||
       directions.left) {
-        let event = new CustomEvent('onswipe', {
-          detail: {
-            directions,
-            x: [x[0], x[x.length - 1]], // Start and end x-coords
-            y: [y[0], y[y.length - 1]] // Start and end y-coords
-          }
-        });
-        element.dispatchEvent(event);
-      }
-  });
+      let event = new CustomEvent('onswipe', {
+        detail: {
+          directions,
+          x: [x[0], x[x.length - 1]], // Start and end x-coords
+          y: [y[0], y[y.length - 1]] // Start and end y-coords
+        }
+      });
+      element.dispatchEvent(event);
+    }
+  };
+
+  // When a swipe is performed, store the coords.
+  const _touchmove = function (e) {
+    let touch = e.changedTouches[0];
+    touches.push({
+      x: touch.clientX,
+      y: touch.clientY
+    });
+  }
+
+  element.addEventListener('touchmove', _touchmove);
+  element.addEventListener('touchend', _touchend);
+
+  return {
+    off: function () {
+      element.removeEventListener('touchmove', _touchmove);
+      element.removeEventListener('touchend', _touchend);
+    }
+  }
 };
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {

@@ -16,7 +16,7 @@ Swipe-listener is a very minimal library that allows listening for swipe gesture
 
 ```js
 var container = document.querySelector('#container');
-SwipeListener(container);
+var listener = SwipeListener(container);
 container.addEventListener('onswipe', function (e) {
   var directions = e.detail.directions;
   var x = e.detail.x;
@@ -60,7 +60,7 @@ container.addEventListener('onswipe', function (e) {
 <script src="path/to/swipe-listener.min.js" type="text/javascript"></script>
 <script>
   var container = document.querySelector('#container');
-  SwipeListener(container);
+  var listener = SwipeListener(container);
   container.addEventListener('onswipe', function (e) {
     console.log(e.detail);
   });
@@ -112,6 +112,17 @@ Note that multiple directions can be `true` at one. In case of a top-left swipe,
 | `minVertical` | Minimum number of vertical pixels travelled for the gesture to be considered as a top or bottom swipe. | `10` |
 | `deltaHorizontal` | Maximum difference between the rightmost pixel (right-swipe) or the leftmost pixel (left-swipe) travelled to and the pixel at which the gesture is released. | `3` |
 | `deltaVertical` | Maximum difference between the bottommost pixel (bottom-swipe) or the topmost pixel (top-swipe) travelled to and the pixel at which the gesture is released. | `5` |
+
+### `.off()`
+
+Turns off the swipe-listener on a given element.
+
+Usage:
+
+```js
+var listener = SwipeListener(myElem);
+listener.off();
+```
 
 ---
 

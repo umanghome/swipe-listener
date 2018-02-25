@@ -7,6 +7,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
  * emits `onswipe` event when a swipe gesture is performed.
  * @param {DOMElement} element Element on which to listen for swipe gestures.
  * @param {Object} options Optional: Options.
+ * @return {Object}
  */
 var SwipeListener = function SwipeListener(element, options) {
   if (!element) return;
@@ -39,52 +40,11 @@ var SwipeListener = function SwipeListener(element, options) {
   }
   options = _extends({}, defaultOpts, options);
 
-  /**
-   * Returns the minimum value from the array.
-   * @param {Array} arr 
-   * @return {Any}
-   */
-  function findMin(arr) {
-    if (!arr || !arr.length) return;
-    var m = arr[0];
-    for (var i = 1; i < arr.length; i++) {
-      if (arr[i] < m) {
-        m = arr[i];
-      }
-    }
-    return m;
-  }
-
-  /**
-   * Returns the maximum value from the array.
-   * @param {Array} arr 
-   * @return {Any}
-   */
-  function findMax(arr) {
-    if (!arr || !arr.length) return;
-    var m = arr[0];
-    for (var i = 1; i < arr.length; i++) {
-      if (arr[i] > m) {
-        m = arr[i];
-      }
-    }
-    return m;
-  }
-
   // Store the touches
   var touches = [];
 
-  // When a swipe is performed, store the coords.
-  element.addEventListener('touchmove', function (e) {
-    var touch = e.changedTouches[0];
-    touches.push({
-      x: touch.clientX,
-      y: touch.clientY
-    });
-  });
-
   // When the swipe is completed, calculate the direction.
-  element.addEventListener('touchend', function (e) {
+  var _touchend = function _touchend(e) {
     if (!touches.length) return;
 
     var x = [];
@@ -111,8 +71,8 @@ var SwipeListener = function SwipeListener(element, options) {
       swipe = 'right';
     }
 
-    var min = findMin(x),
-        max = findMax(x),
+    var min = Math.min.apply(Math, x),
+        max = Math.max.apply(Math, x),
         _diff = void 0;
 
     // If minimum horizontal distance was travelled
@@ -142,8 +102,8 @@ var SwipeListener = function SwipeListener(element, options) {
       swipe = 'bottom';
     }
 
-    min = findMin(y);
-    max = findMax(y);
+    min = Math.min.apply(Math, y);
+    max = Math.max.apply(Math, y);
 
     // If minimum vertical distance was travelled
     if (Math.abs(diff) >= options.minVertical) {
@@ -177,7 +137,26 @@ var SwipeListener = function SwipeListener(element, options) {
       });
       element.dispatchEvent(event);
     }
-  });
+  };
+
+  // When a swipe is performed, store the coords.
+  var _touchmove = function _touchmove(e) {
+    var touch = e.changedTouches[0];
+    touches.push({
+      x: touch.clientX,
+      y: touch.clientY
+    });
+  };
+
+  element.addEventListener('touchmove', _touchmove);
+  element.addEventListener('touchend', _touchend);
+
+  return {
+    off: function off() {
+      element.removeEventListener('touchmove', _touchmove);
+      element.removeEventListener('touchend', _touchend);
+    }
+  };
 };
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {

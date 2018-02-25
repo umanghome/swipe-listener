@@ -23,7 +23,7 @@
       setMessage('');
     });
 
-    SwipeListener(container);
+    var listener = SwipeListener(container);
 
     container.addEventListener('onswipe', function (e) {
       var d = e.detail.directions;
