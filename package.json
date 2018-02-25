@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "babel index.js --out-file dist/swipe-listener.js --presets es2015 --plugins=transform-object-rest-spread && babel-minify dist/swipe-listener.js --out-file dist/swipe-listener.min.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean-dist": "rm -rf dist && mkdir dist",
+    "add-dist": "git add dist"
   },
-  "pre-commit": [
-    "build"
-  ],
+  "pre-commit": ["clean-dist", "build", "add-dist"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/umanghome/swipe-listener.git"
