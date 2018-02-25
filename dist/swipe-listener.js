@@ -32,7 +32,8 @@ var SwipeListener = function SwipeListener(element, options) {
     minVertical: 10, // Minimum number of pixels traveled to count as a vertical swipe.
     deltaHorizontal: 3, // Delta for horizontal swipe
     deltaVertical: 5, // Delta for vertical swipe
-    preventScroll: false // Prevents scrolling when swiping.
+    preventScroll: false, // Prevents scrolling when swiping.
+    lockAxis: false // Select only one axis to be true instead of multiple.
   };
 
   // Set options
@@ -129,13 +130,35 @@ var SwipeListener = function SwipeListener(element, options) {
 
     // If there is a swipe direction, emit an event.
     if (directions.top || directions.right || directions.bottom || directions.left) {
-      var event = new CustomEvent('swipe', {
+      var xs = x[0],
+          xe = x[x.length - 1],
+          // Start and end x-coords
+      ys = y[0],
+          ye = y[y.length - 1]; // Start and end y-coords
+
+      /**
+      * If lockAxis is true, determine which axis to select.
+      * The axis with the most travel is selected.
+      * TODO: Factor in for the orientation of the device
+      * and use it as a weight to determine the travel along an axis.
+      */
+      if (options.lockAxis) {
+        if ((directions.left || directions.right) && Math.abs(xs - xe) > Math.abs(ys - ye)) {
+          directions.top = directions.bottom = false;
+        } else if ((directions.top || directions.bottom) && Math.abs(xs - xe) < Math.abs(ys - ye)) {
+          directions.left = directions.right = false;
+        }
+      }
+
+      var eventData = {
         detail: {
           directions: directions,
-          x: [x[0], x[x.length - 1]], // Start and end x-coords
-          y: [y[0], y[y.length - 1]] // Start and end y-coords
+          x: [xs, xe],
+          y: [ys, ye]
         }
-      });
+      };
+
+      var event = new CustomEvent('swipe', eventData);
       element.dispatchEvent(event);
     }
   };

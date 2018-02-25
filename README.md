@@ -120,6 +120,7 @@ Data passed to `event.detail`:
 | `deltaHorizontal` | Maximum difference between the rightmost pixel (right-swipe) or the leftmost pixel (left-swipe) travelled to and the pixel at which the gesture is released. | `3` |
 | `deltaVertical` | Maximum difference between the bottommost pixel (bottom-swipe) or the topmost pixel (top-swipe) travelled to and the pixel at which the gesture is released. | `5` |
 | `preventScroll` | Prevents page scrolling when swiping on the DOM element. | `false` |
+| `lockAxis` | Enforces only one direction to be true instead of multiple. Selects the direction with the most travel. Is not enforced when the travel is equal. Example: for a top-left swipe, only one of `top` and `left` will be `true` instead of both. | `false` |
 
 ### `.off()`
 
