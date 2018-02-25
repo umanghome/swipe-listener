@@ -12,7 +12,7 @@
     Swipe Here
   </div>
   <div id="message"></div>
-  <script src="swipe-listener.min.js"></script>
+  <script src="dist/swipe-listener.min.js"></script>
   <script>
     let setMessage = function (msg) {
       document.querySelector('#message').innerHTML = msg;
@@ -25,7 +25,7 @@
 
     var listener = SwipeListener(container);
 
-    container.addEventListener('onswipe', function (e) {
+    container.addEventListener('swipe', function (e) {
       var d = e.detail.directions;
 
       if (d.top) {

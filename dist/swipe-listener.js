@@ -4,7 +4,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /**
  * Starts monitoring swipes on the given element and
- * emits `onswipe` event when a swipe gesture is performed.
+ * emits `swipe` event when a swipe gesture is performed.
  * @param {DOMElement} element Element on which to listen for swipe gestures.
  * @param {Object} options Optional: Options.
  * @return {Object}
@@ -128,7 +128,7 @@ var SwipeListener = function SwipeListener(element, options) {
 
     // If there is a swipe direction, emit an event.
     if (directions.top || directions.right || directions.bottom || directions.left) {
-      var event = new CustomEvent('onswipe', {
+      var event = new CustomEvent('swipe', {
         detail: {
           directions: directions,
           x: [x[0], x[x.length - 1]], // Start and end x-coords

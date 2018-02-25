@@ -1,6 +1,6 @@
 /**
  * Starts monitoring swipes on the given element and
- * emits `onswipe` event when a swipe gesture is performed.
+ * emits `swipe` event when a swipe gesture is performed.
  * @param {DOMElement} element Element on which to listen for swipe gestures.
  * @param {Object} options Optional: Options.
  * @return {Object}
@@ -130,7 +130,7 @@ const SwipeListener = function (element, options) {
       directions.right ||
       directions.bottom ||
       directions.left) {
-      let event = new CustomEvent('onswipe', {
+      let event = new CustomEvent('swipe', {
         detail: {
           directions,
           x: [x[0], x[x.length - 1]], // Start and end x-coords

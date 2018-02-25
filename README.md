@@ -10,14 +10,14 @@ Open from a touch-device, or simulate a touch-device using DevTools.
 
 # What
 
-Swipe-listener is a very minimal library that allows listening for swipe gesture on literally any DOM element. Once invoked with a DOM element, simply listen for `onswipe` event and determine the direction with the `directions` object.
+Swipe-listener is a very minimal library that allows listening for swipe gesture on literally any DOM element. Once invoked with a DOM element, simply listen for `swipe` event and determine the direction with the `directions` object.
 
 # Example Code
 
 ```js
 var container = document.querySelector('#container');
 var listener = SwipeListener(container);
-container.addEventListener('onswipe', function (e) {
+container.addEventListener('swipe', function (e) {
   var directions = e.detail.directions;
   var x = e.detail.x;
   var y = e.detail.y;
@@ -68,13 +68,13 @@ container.addEventListener('onswipe', function (e) {
 <script>
   var container = document.querySelector('#container');
   var listener = SwipeListener(container);
-  container.addEventListener('onswipe', function (e) {
+  container.addEventListener('swipe', function (e) {
     console.log(e.detail);
   });
 </script>
 ```
 
-Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@1.0.0/dist/swipe-listener.min.js`](https://unpkg.com/swipe-listener@1.0.0/dist/swipe-listener.min.js)
+Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@1.0.1/dist/swipe-listener.min.js`](https://unpkg.com/swipe-listener@1.0.1/dist/swipe-listener.min.js)
 
 ## Installing using NPM
 
@@ -94,10 +94,10 @@ const SwipeListener = require('swipe-listener');
 
 ### `SwipeListener(element, options)`
 
-- `element` DOM Element on which you want to enable swipe gesture tracking. This is the element on which you will be attacking the `onswipe` event listener.
+- `element` DOM Element on which you want to enable swipe gesture tracking. This is the element on which you will be attacking the `swipe` event listener.
 - `options` [Optional] Configuration options (see below)
 
-Listen for `onswipe` event on the `element` passed. Access details using `event.detail`. For example, `directions` can be accessed using `event.detail.directions`.
+Listen for `swipe` event on the `element` passed. Access details using `event.detail`. For example, `directions` can be accessed using `event.detail.directions`.
 
 Data passed to `event.detail`:
 
