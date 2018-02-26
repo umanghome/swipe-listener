@@ -20,6 +20,10 @@ html, body, #container, #message {
   font-size: 48px;
   word-wrap: break-word;
   color: rgba(0, 0, 0, 0.3);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #message {

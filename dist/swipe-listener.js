@@ -45,6 +45,34 @@ var SwipeListener = function SwipeListener(element, options) {
   // Store the touches
   var touches = [];
 
+  // Not dragging by default.
+  var dragging = false;
+
+  // When mouse-click is started, make dragging true.
+  var _mousedown = function _mousedown(e) {
+    dragging = true;
+  };
+  element.addEventListener('mousedown', _mousedown);
+
+  // When mouse-click is released, make dragging false and signify end by imitating `touchend`.
+  var _mouseup = function _mouseup(e) {
+    dragging = false;
+    _touchend(e);
+  };
+  element.addEventListener('mouseup', _mouseup);
+
+  // When mouse is moved while being clicked, imitate a `touchmove`.
+  var _mousemove = function _mousemove(e) {
+    if (dragging) {
+      e.changedTouches = [{
+        clientX: e.clientX,
+        clientY: e.clientY
+      }];
+      _touchmove(e);
+    }
+  };
+  element.addEventListener('mousemove', _mousemove);
+
   // When the swipe is completed, calculate the direction.
   var _touchend = function _touchend(e) {
     if (!touches.length) return;
@@ -182,6 +210,9 @@ var SwipeListener = function SwipeListener(element, options) {
     off: function off() {
       element.removeEventListener('touchmove', _touchmove);
       element.removeEventListener('touchend', _touchend);
+      element.removeEventListener('mousedown', _mousedown);
+      element.removeEventListener('mouseup', _mouseup);
+      element.removeEventListener('mousemove', _mousemove);
     }
   };
 };
