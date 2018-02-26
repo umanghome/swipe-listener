@@ -33,7 +33,7 @@ var SwipeListener = function SwipeListener(element, options) {
     deltaHorizontal: 3, // Delta for horizontal swipe
     deltaVertical: 5, // Delta for vertical swipe
     preventScroll: false, // Prevents scrolling when swiping.
-    lockAxis: false // Select only one axis to be true instead of multiple.
+    lockAxis: true // Select only one axis to be true instead of multiple.
   };
 
   // Set options

@@ -120,7 +120,7 @@ Data passed to `event.detail`:
 | `deltaHorizontal` | Maximum difference between the rightmost pixel (right-swipe) or the leftmost pixel (left-swipe) travelled to and the pixel at which the gesture is released. | `3` |
 | `deltaVertical` | Maximum difference between the bottommost pixel (bottom-swipe) or the topmost pixel (top-swipe) travelled to and the pixel at which the gesture is released. | `5` |
 | `preventScroll` | Prevents page scrolling when swiping on the DOM element. | `false` |
-| `lockAxis` | Enforces only one direction to be true instead of multiple. Selects the direction with the most travel. Is not enforced when the travel is equal. Example: for a top-left swipe, only one of `top` and `left` will be `true` instead of both. | `false` |
+| `lockAxis` | Enforces only one direction to be true instead of multiple. Selects the direction with the most travel. Is not enforced when the travel is equal. Example: for a top-left swipe, only one of `top` and `left` will be `true` instead of both. | `true` |
 
 ### `.off()`
 
@@ -135,7 +135,7 @@ listener.off();
 
 # Misc
 
-- Swipes using the mouse might make multiple directions true even when the travel in a certain direction may not be much. You can work around this by setting `lockAxis` to `true` when the page is not being accessed from a touch-enabled device. Or, you can use `event.detail.x` and `event.detail.y` to calculate which direction has more travel and consider only that direction. Or, you can increase the values of `minVertical` and `minHorizontal`.
+- When `lockAxis` is `false`, swipes using the mouse might make multiple directions `true` even when the travel in a certain direction may not be much. You can work around this by setting `lockAxis` to `true` when the page is not being accessed from a touch-enabled device. Or, you can use `event.detail.x` and `event.detail.y` to calculate which direction has more travel and consider only that direction. Or, you can increase the values of `minVertical` and `minHorizontal`.
 
 ---
 

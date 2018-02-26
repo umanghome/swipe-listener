@@ -2,7 +2,7 @@
 
 ### 1.0.4
 
-Adds support for swipes using mouse.
+Adds support for swipes using mouse, defaults `lockAxis` to `true`.
 
 ### 1.0.3
 

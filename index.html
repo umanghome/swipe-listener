@@ -22,6 +22,9 @@
     container.addEventListener('touchstart', function () {
       setMessage('');
     });
+    container.addEventListener('mousedown', function () {
+      setMessage('');
+    });
 
     var listener = SwipeListener(container);
 
