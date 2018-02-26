@@ -4,9 +4,7 @@ Zero-dependency, minimal swipe-gesture listener for the web.
 
 ---
 
-## [Demo](https://umanghome.github.io/swipe-listener) 
-
-Open from a touch-device, or simulate a touch-device using DevTools.
+## [Demo](https://umanghome.github.io/swipe-listener)
 
 # What
 
