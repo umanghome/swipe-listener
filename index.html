@@ -64,6 +64,10 @@
     container.addEventListener('swiperelease', function (e) {
       console.log('swiperelease', e.detail);
     });
+
+    container.addEventListener('swipecancel', function (e) {
+      console.log('swipecancel', e.detail);
+    });
   </script>
 </body>
 </html>

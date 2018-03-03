@@ -199,6 +199,14 @@ const SwipeListener = function (element, options) {
       
       let event = new CustomEvent('swipe', eventData);
       element.dispatchEvent(event);
+    } else {
+      let cancelEvent = new CustomEvent('swipecancel', {
+        detail: {
+          x: [xs, xe],
+          y: [ys, ye]
+        }
+      });
+      element.dispatchEvent(cancelEvent);
     }
   };
 

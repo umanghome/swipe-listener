@@ -2,7 +2,7 @@
 
 ### 1.0.5
 
-Adds `swiping` and `swiperelease` events.
+Adds `swiping`, `swiperelease`, `swipecancel` events.
 
 ### 1.0.4
 
