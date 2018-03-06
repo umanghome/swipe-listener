@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.5
+
+Adds `swiping`, `swiperelease`, `swipecancel` events.
+
 ### 1.0.4
 
 Adds support for swipes using mouse, defaults `lockAxis` to `true`.

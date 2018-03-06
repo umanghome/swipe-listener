@@ -76,8 +76,8 @@ const SwipeListener = function (element, options) {
   const _touchend = function(e) {
     if (!touches.length) return;
 
-    let x = [];
-    let y = [];
+    let x = [],
+    y = [];
 
     let directions = {
       top: false,
@@ -89,6 +89,23 @@ const SwipeListener = function (element, options) {
     for (let i = 0; i < touches.length; i++) {
       x.push(touches[i].x);
       y.push(touches[i].y);
+    }
+
+    const xs = x[0], xe = x[x.length - 1], // Start and end x-coords
+    ys = y[0], ye = y[y.length - 1];  // Start and end y-coords
+    
+    const eventCoords = {
+      x: [xs, xe],
+      y: [ys, ye]
+    };
+
+    if (touches.length > 1) {
+      const swipeReleaseEventData = {
+        detail: eventCoords
+      };
+      
+      let swipeReleaseEvent = new CustomEvent('swiperelease', swipeReleaseEventData);
+      element.dispatchEvent(swipeReleaseEvent);
     }
 
     // Determine left or right
@@ -160,9 +177,6 @@ const SwipeListener = function (element, options) {
       directions.right ||
       directions.bottom ||
       directions.left) {
-      const xs = x[0], xe = x[x.length - 1], // Start and end x-coords
-        ys = y[0], ye = y[y.length - 1];  // Start and end y-coords
-
       /**
       * If lockAxis is true, determine which axis to select.
       * The axis with the most travel is selected.
@@ -180,13 +194,17 @@ const SwipeListener = function (element, options) {
       const eventData = {
         detail: {
           directions,
-          x: [xs, xe],
-          y: [ys, ye]
+          ...eventCoords
         }
       };
       
       let event = new CustomEvent('swipe', eventData);
       element.dispatchEvent(event);
+    } else {
+      let cancelEvent = new CustomEvent('swipecancel', {
+        detail: eventCoords
+      });
+      element.dispatchEvent(cancelEvent);
     }
   };
 
@@ -200,6 +218,22 @@ const SwipeListener = function (element, options) {
       x: touch.clientX,
       y: touch.clientY
     });
+
+    // Emit a `swiping` event if there are more than one touch-points.
+    if (touches.length > 1) {
+      const xs = touches[0].x, // Start and end x-coords
+        xe = touches[touches.length - 1].x,
+        ys = touches[0].y, // Start and end y-coords
+        ye = touches[touches.length - 1].y,
+        eventData = {
+          detail: {
+            x: [xs, xe],
+            y: [ys, ye]
+          }
+        };
+      let event = new CustomEvent('swiping', eventData);
+      element.dispatchEvent(event);
+    }
   }
 
   element.addEventListener('touchmove', _touchmove);

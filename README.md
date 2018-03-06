@@ -95,7 +95,7 @@ const SwipeListener = require('swipe-listener');
 - `element` DOM Element on which you want to enable swipe gesture tracking. This is the element on which you will be attacking the `swipe` event listener.
 - `options` [Optional] Configuration options (see below)
 
-Listen for `swipe` event on the `element` passed. Access details using `event.detail`. For example, `directions` can be accessed using `event.detail.directions`.
+Listen for `swipe` event on the `element` passed. Access details using `event.detail`. For example, `directions` can be accessed using `event.detail.directions`. See [events](#events) for more events.
 
 Data passed to `event.detail`:
 
@@ -130,6 +130,53 @@ Usage:
 var listener = SwipeListener(myElem);
 listener.off();
 ```
+
+# Events
+
+### `swipe` - Emitted once a swipe is performed.
+
+Emitted once a swipe is completed.
+
+`event.detail` contains
+
+| key | type | description |
+| --- | --- | --- |
+| `directions` | Object | Object containing `top`, `left`, `bottom`, `right` keys. The directions in which the swipe is performed are set to `true`. |
+| `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
+| `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+
+### `swiping` - Emitted while a swipe is being performed.
+
+Emitted multiple times during a single swipe.
+
+`event.detail` contains
+
+| key | type | description |
+| --- | --- | --- |
+| `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
+| `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+
+### `swiperelease` - Emitted once the swipe is released/completed.
+
+Emitted at the end of the swipe.
+
+`event.detail` contains
+
+| key | type | description |
+| --- | --- | --- |
+| `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
+| `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+
+### `swipecancel` - Emitted if the swipe-distance did not meet minimum travel-distance.
+
+Emitted at the end of the swipe.
+
+`event.detail` contains
+
+| key | type | description |
+| --- | --- | --- |
+| `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
+| `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
 
 # Misc
 

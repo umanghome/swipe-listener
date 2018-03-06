@@ -77,8 +77,8 @@ var SwipeListener = function SwipeListener(element, options) {
   var _touchend = function _touchend(e) {
     if (!touches.length) return;
 
-    var x = [];
-    var y = [];
+    var x = [],
+        y = [];
 
     var directions = {
       top: false,
@@ -90,6 +90,26 @@ var SwipeListener = function SwipeListener(element, options) {
     for (var i = 0; i < touches.length; i++) {
       x.push(touches[i].x);
       y.push(touches[i].y);
+    }
+
+    var xs = x[0],
+        xe = x[x.length - 1],
+        // Start and end x-coords
+    ys = y[0],
+        ye = y[y.length - 1]; // Start and end y-coords
+
+    var eventCoords = {
+      x: [xs, xe],
+      y: [ys, ye]
+    };
+
+    if (touches.length > 1) {
+      var swipeReleaseEventData = {
+        detail: eventCoords
+      };
+
+      var swipeReleaseEvent = new CustomEvent('swiperelease', swipeReleaseEventData);
+      element.dispatchEvent(swipeReleaseEvent);
     }
 
     // Determine left or right
@@ -158,12 +178,6 @@ var SwipeListener = function SwipeListener(element, options) {
 
     // If there is a swipe direction, emit an event.
     if (directions.top || directions.right || directions.bottom || directions.left) {
-      var xs = x[0],
-          xe = x[x.length - 1],
-          // Start and end x-coords
-      ys = y[0],
-          ye = y[y.length - 1]; // Start and end y-coords
-
       /**
       * If lockAxis is true, determine which axis to select.
       * The axis with the most travel is selected.
@@ -179,15 +193,18 @@ var SwipeListener = function SwipeListener(element, options) {
       }
 
       var eventData = {
-        detail: {
-          directions: directions,
-          x: [xs, xe],
-          y: [ys, ye]
-        }
+        detail: _extends({
+          directions: directions
+        }, eventCoords)
       };
 
       var event = new CustomEvent('swipe', eventData);
       element.dispatchEvent(event);
+    } else {
+      var cancelEvent = new CustomEvent('swipecancel', {
+        detail: eventCoords
+      });
+      element.dispatchEvent(cancelEvent);
     }
   };
 
@@ -201,6 +218,24 @@ var SwipeListener = function SwipeListener(element, options) {
       x: touch.clientX,
       y: touch.clientY
     });
+
+    // Emit a `swiping` event if there are more than one touch-points.
+    if (touches.length > 1) {
+      var xs = touches[0].x,
+          // Start and end x-coords
+      xe = touches[touches.length - 1].x,
+          ys = touches[0].y,
+          // Start and end y-coords
+      ye = touches[touches.length - 1].y,
+          eventData = {
+        detail: {
+          x: [xs, xe],
+          y: [ys, ye]
+        }
+      };
+      var event = new CustomEvent('swiping', eventData);
+      element.dispatchEvent(event);
+    }
   };
 
   element.addEventListener('touchmove', _touchmove);

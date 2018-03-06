@@ -29,6 +29,7 @@
     var listener = SwipeListener(container);
 
     container.addEventListener('swipe', function (e) {
+      console.log('swipe', e.detail);
       var d = e.detail.directions;
 
       if (d.top) {
@@ -54,6 +55,18 @@
           setMessage('Swiped left.');
         }
       }
+    });
+
+    container.addEventListener('swiping', function (e) {
+      console.log('swiping', e.detail);
+    });
+
+    container.addEventListener('swiperelease', function (e) {
+      console.log('swiperelease', e.detail);
+    });
+
+    container.addEventListener('swipecancel', function (e) {
+      console.log('swipecancel', e.detail);
     });
   </script>
 </body>
