@@ -236,7 +236,7 @@ const SwipeListener = function (element, options) {
     }
   }
 
-  element.addEventListener('touchmove', _touchmove);
+  element.addEventListener('touchmove', _touchmove, {passive: !options.preventScroll});
   element.addEventListener('touchend', _touchend);
 
   return {
