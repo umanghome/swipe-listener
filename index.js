@@ -93,7 +93,7 @@ const SwipeListener = function (element, options) {
 
     const xs = x[0], xe = x[x.length - 1], // Start and end x-coords
     ys = y[0], ye = y[y.length - 1];  // Start and end y-coords
-    
+
     const eventCoords = {
       x: [xs, xe],
       y: [ys, ye]
@@ -103,7 +103,7 @@ const SwipeListener = function (element, options) {
       const swipeReleaseEventData = {
         detail: eventCoords
       };
-      
+
       let swipeReleaseEvent = new CustomEvent('swiperelease', swipeReleaseEventData);
       element.dispatchEvent(swipeReleaseEvent);
     }
@@ -197,7 +197,7 @@ const SwipeListener = function (element, options) {
           ...eventCoords
         }
       };
-      
+
       let event = new CustomEvent('swipe', eventData);
       element.dispatchEvent(event);
     } else {
@@ -236,12 +236,24 @@ const SwipeListener = function (element, options) {
     }
   }
 
-  element.addEventListener('touchmove', _touchmove);
+  // Test via a getter in the options object to see if the passive property is accessed
+  let passiveOptions = false;
+  try {
+    const testOptions = Object.defineProperty({}, 'passive', {
+      get: function () {
+        passiveOptions = {passive: !options.preventScroll};
+      }
+    });
+    window.addEventListener('testPassive', null, testOptions);
+    window.removeEventListener('testPassive', null, testOptions);
+  } catch (e) {}
+
+  element.addEventListener('touchmove', _touchmove, passiveOptions);
   element.addEventListener('touchend', _touchend);
 
   return {
     off: function () {
-      element.removeEventListener('touchmove', _touchmove);
+      element.removeEventListener('touchmove', _touchmove, passiveOptions);
       element.removeEventListener('touchend', _touchend);
       element.removeEventListener('mousedown', _mousedown);
       element.removeEventListener('mouseup', _mouseup);

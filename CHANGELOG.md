@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.6
+
+Uses `passive` event listener for touchmove and mousemove events.
+
 ### 1.0.5
 
 Adds `swiping`, `swiperelease`, `swipecancel` events.

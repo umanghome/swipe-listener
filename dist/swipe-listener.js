@@ -238,12 +238,24 @@ var SwipeListener = function SwipeListener(element, options) {
     }
   };
 
-  element.addEventListener('touchmove', _touchmove);
+  // Test via a getter in the options object to see if the passive property is accessed
+  var passiveOptions = false;
+  try {
+    var testOptions = Object.defineProperty({}, 'passive', {
+      get: function get() {
+        passiveOptions = { passive: !options.preventScroll };
+      }
+    });
+    window.addEventListener('testPassive', null, testOptions);
+    window.removeEventListener('testPassive', null, testOptions);
+  } catch (e) {}
+
+  element.addEventListener('touchmove', _touchmove, passiveOptions);
   element.addEventListener('touchend', _touchend);
 
   return {
     off: function off() {
-      element.removeEventListener('touchmove', _touchmove);
+      element.removeEventListener('touchmove', _touchmove, passiveOptions);
       element.removeEventListener('touchend', _touchend);
       element.removeEventListener('mousedown', _mousedown);
       element.removeEventListener('mouseup', _mouseup);
