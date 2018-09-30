@@ -106,6 +106,7 @@ Data passed to `event.detail`:
   - `left` (Boolean) Signifies a left-swipe.
 - `x` (Array) Array containing two elements: starting and ending x-coords.
 - `y` (Array) Array containing two elements: starting and ending y-coords.
+- `touch` (Boolean) Whether or not `TouchEvent` was used for this particular event.
 
 **Note that multiple directions can be `true` at one. In case of a top-left swipe, `directions.top` and `directions.left` will both be `true`.**
 
@@ -144,6 +145,7 @@ Emitted once a swipe is completed.
 | `directions` | Object | Object containing `top`, `left`, `bottom`, `right` keys. The directions in which the swipe is performed are set to `true`. |
 | `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
 | `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event. |
 
 ### `swiping` - Emitted while a swipe is being performed.
 
@@ -155,6 +157,7 @@ Emitted multiple times during a single swipe.
 | --- | --- | --- |
 | `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
 | `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event. |
 
 ### `swiperelease` - Emitted once the swipe is released/completed.
 
@@ -166,6 +169,7 @@ Emitted at the end of the swipe.
 | --- | --- | --- |
 | `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
 | `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event. |
 
 ### `swipecancel` - Emitted if the swipe-distance did not meet minimum travel-distance.
 
@@ -177,6 +181,7 @@ Emitted at the end of the swipe.
 | --- | --- | --- |
 | `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
 | `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event. |
 
 # Misc
 

@@ -76,6 +76,8 @@ const SwipeListener = function (element, options) {
   const _touchend = function(e) {
     if (!touches.length) return;
 
+    const touch = e instanceof TouchEvent;
+
     let x = [],
     y = [];
 
@@ -101,7 +103,10 @@ const SwipeListener = function (element, options) {
 
     if (touches.length > 1) {
       const swipeReleaseEventData = {
-        detail: eventCoords
+        detail: {
+          touch,
+          ...eventCoords
+        },
       };
 
       let swipeReleaseEvent = new CustomEvent('swiperelease', swipeReleaseEventData);
@@ -194,15 +199,19 @@ const SwipeListener = function (element, options) {
       const eventData = {
         detail: {
           directions,
+          touch,
           ...eventCoords
-        }
+        },
       };
 
       let event = new CustomEvent('swipe', eventData);
       element.dispatchEvent(event);
     } else {
       let cancelEvent = new CustomEvent('swipecancel', {
-        detail: eventCoords
+        detail: {
+          touch,
+          ...eventCoords,
+        }
       });
       element.dispatchEvent(cancelEvent);
     }
@@ -228,8 +237,9 @@ const SwipeListener = function (element, options) {
         eventData = {
           detail: {
             x: [xs, xe],
-            y: [ys, ye]
-          }
+            y: [ys, ye],
+            touch: e instanceof TouchEvent
+          },
         };
       let event = new CustomEvent('swiping', eventData);
       element.dispatchEvent(event);
