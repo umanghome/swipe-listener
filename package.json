@@ -4,6 +4,7 @@
   "description": "Zero-dependency, minimal swipe-gesture listener for the web.",
   "main": "dist/swipe-listener.min",
   "scripts": {
+    "start": "parcel swipe-listener.html -p 3000 --open --global SwipeListener",
     "build": "babel index.js --out-file dist/swipe-listener.js --presets es2015 --plugins=transform-object-rest-spread && babel-minify dist/swipe-listener.js --out-file dist/swipe-listener.min.js"
   },
   "repository": {
