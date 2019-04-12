@@ -4,8 +4,12 @@
   "description": "Zero-dependency, minimal swipe-gesture listener for the web.",
   "main": "dist/swipe-listener.min",
   "scripts": {
-    "start": "parcel swipe-listener.html -p 3000 --open --global SwipeListener",
-    "build": "babel index.js --out-file dist/swipe-listener.js --presets es2015 --plugins=transform-object-rest-spread && babel-minify dist/swipe-listener.js --out-file dist/swipe-listener.min.js"
+    "build": "npm run clean && npm run build-minified && npm run build-unminified",
+    "build-base": "parcel build swipe-listener.js --global SwipeListener --experimental-scope-hoisting --target browser",
+    "build-minified": "npm run build-base -- --out-file swipe-listener.min.js",
+    "build-unminified": "npm run build-base -- --no-minify",
+    "clean": "rm -rf dist/",
+    "start": "parcel swipe-listener.html -p 3000 --open --global SwipeListener --target browser"
   },
   "repository": {
     "type": "git",
