@@ -272,14 +272,4 @@ const SwipeListener = function (element, options) {
   }
 };
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-  module.exports = SwipeListener;
-} else {
-  if (typeof define === 'function' && define.amd) {
-    define([], function() {
-      return SwipeListener;
-    });
-  } else {
-    window.SwipeListener = SwipeListener;
-  }
-}
+export const listen = SwipeListener;

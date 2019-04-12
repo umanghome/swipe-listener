@@ -14,7 +14,7 @@ Swipe-listener is a very minimal library that allows listening for swipe gesture
 
 ```js
 var container = document.querySelector('#container');
-var listener = SwipeListener(container);
+var listener = SwipeListener.listen(container);
 container.addEventListener('swipe', function (e) {
   var directions = e.detail.directions;
   var x = e.detail.x;
@@ -65,7 +65,7 @@ container.addEventListener('swipe', function (e) {
 <script src="path/to/swipe-listener.min.js" type="text/javascript"></script>
 <script>
   var container = document.querySelector('#container');
-  var listener = SwipeListener(container);
+  var listener = SwipeListener.listen(container);
   container.addEventListener('swipe', function (e) {
     console.log(e.detail);
   });
@@ -90,7 +90,7 @@ const SwipeListener = require('swipe-listener');
 
 # API
 
-### `SwipeListener(element, options)`
+### `SwipeListener.listen(element, options)`
 
 - `element` DOM Element on which you want to enable swipe gesture tracking. This is the element on which you will be attacking the `swipe` event listener.
 - `options` [Optional] Configuration options (see below)
@@ -128,7 +128,7 @@ Turns off the swipe-listener on a given element.
 Usage:
 
 ```js
-var listener = SwipeListener(myElem);
+var listener = SwipeListener.listen(myElem);
 listener.off();
 ```
 
