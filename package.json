@@ -1,11 +1,10 @@
 {
   "name": "swipe-listener",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "description": "Zero-dependency, minimal swipe-gesture listener for the web.",
-  "main": "index.js",
+  "main": "dist/swipe-listener.min",
   "scripts": {
-    "build": "babel index.js --out-file dist/swipe-listener.js --presets es2015 --plugins=transform-object-rest-spread && babel-minify dist/swipe-listener.js --out-file dist/swipe-listener.min.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel index.js --out-file dist/swipe-listener.js --presets es2015 --plugins=transform-object-rest-spread && babel-minify dist/swipe-listener.js --out-file dist/swipe-listener.min.js"
   },
   "repository": {
     "type": "git",
@@ -28,9 +27,6 @@
   },
   "homepage": "https://github.com/umanghome/swipe-listener",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-minify": "^0.3.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "parcel-bundler": "^1.12.3"
   }
 }
