@@ -30,6 +30,7 @@ const SwipeListener = function (element, options) {
     deltaVertical: 5, // Delta for vertical swipe
     preventScroll: false, // Prevents scrolling when swiping.
     lockAxis: true, // Select only one axis to be true instead of multiple.
+    enableTouchSimulation: true, // Enables mouse touch simulation.
   };
 
   // Set options
@@ -51,14 +52,14 @@ const SwipeListener = function (element, options) {
   const _mousedown = function (e) {
     dragging = true;
   }
-  element.addEventListener('mousedown', _mousedown);
+  options.enableTouchSimulation && element.addEventListener('mousedown', _mousedown);
 
   // When mouse-click is released, make dragging false and signify end by imitating `touchend`.
   const _mouseup = function (e) {
     dragging = false;
     _touchend(e);
   }
-  element.addEventListener('mouseup', _mouseup);
+  options.enableTouchSimulation && element.addEventListener('mouseup', _mouseup);
 
   // When mouse is moved while being clicked, imitate a `touchmove`.
   const _mousemove = function (e) {
@@ -70,7 +71,7 @@ const SwipeListener = function (element, options) {
       _touchmove(e);
     }
   }
-  element.addEventListener('mousemove', _mousemove);
+  options.enableTouchSimulation && element.addEventListener('mousemove', _mousemove);
 
   // When the swipe is completed, calculate the direction.
   const _touchend = function(e) {
@@ -265,9 +266,9 @@ const SwipeListener = function (element, options) {
     off: function () {
       element.removeEventListener('touchmove', _touchmove, passiveOptions);
       element.removeEventListener('touchend', _touchend);
-      element.removeEventListener('mousedown', _mousedown);
-      element.removeEventListener('mouseup', _mouseup);
-      element.removeEventListener('mousemove', _mousemove);
+      options.enableTouchSimulation && element.removeEventListener('mousedown', _mousedown);
+      options.enableTouchSimulation && element.removeEventListener('mouseup', _mouseup);
+      options.enableTouchSimulation && element.removeEventListener('mousemove', _mousemove);
     }
   }
 };
