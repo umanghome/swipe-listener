@@ -33,7 +33,9 @@ var SwipeListener = function SwipeListener(element, options) {
     deltaHorizontal: 3, // Delta for horizontal swipe
     deltaVertical: 5, // Delta for vertical swipe
     preventScroll: false, // Prevents scrolling when swiping.
-    lockAxis: true // Select only one axis to be true instead of multiple.
+    lockAxis: true, // Select only one axis to be true instead of multiple.
+    touch: true, // Listen for touch events
+    mouse: true // Listen for mouse events
   };
 
   // Set options
@@ -52,14 +54,12 @@ var SwipeListener = function SwipeListener(element, options) {
   var _mousedown = function _mousedown(e) {
     dragging = true;
   };
-  element.addEventListener('mousedown', _mousedown);
 
   // When mouse-click is released, make dragging false and signify end by imitating `touchend`.
   var _mouseup = function _mouseup(e) {
     dragging = false;
     _touchend(e);
   };
-  element.addEventListener('mouseup', _mouseup);
 
   // When mouse is moved while being clicked, imitate a `touchmove`.
   var _mousemove = function _mousemove(e) {
@@ -71,7 +71,12 @@ var SwipeListener = function SwipeListener(element, options) {
       _touchmove(e);
     }
   };
-  element.addEventListener('mousemove', _mousemove);
+
+  if (options.mouse) {
+    element.addEventListener('mousedown', _mousedown);
+    element.addEventListener('mouseup', _mouseup);
+    element.addEventListener('mousemove', _mousemove);
+  }
 
   // When the swipe is completed, calculate the direction.
   var _touchend = function _touchend(e) {
@@ -258,8 +263,10 @@ var SwipeListener = function SwipeListener(element, options) {
     window.removeEventListener('testPassive', null, testOptions);
   } catch (e) {}
 
-  element.addEventListener('touchmove', _touchmove, passiveOptions);
-  element.addEventListener('touchend', _touchend);
+  if (options.touch) {
+    element.addEventListener('touchmove', _touchmove, passiveOptions);
+    element.addEventListener('touchend', _touchend);
+  }
 
   return {
     off: function off() {
