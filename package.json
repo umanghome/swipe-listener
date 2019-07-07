@@ -2,7 +2,7 @@
   "name": "swipe-listener",
   "version": "1.0.7",
   "description": "Zero-dependency, minimal swipe-gesture listener for the web.",
-  "main": "index.js",
+  "main": "dist/swipe-listener.min.js",
   "scripts": {
     "build": "babel index.js --out-file dist/swipe-listener.js --presets es2015 --plugins=transform-object-rest-spread && babel-minify dist/swipe-listener.js --out-file dist/swipe-listener.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
