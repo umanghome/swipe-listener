@@ -1,5 +1,13 @@
 # Changelog
 
+### 1.1.0
+
+- `main` in `package.json` refers to `dist/swipe-listener.min.js` instead of `index.js`. Transpiled version would be served directly.
+- Added options `mouse` and `touch` to allow setting which input source swipes should be listened for.
+- Updated `package-lock.json`.
+- Added sanity checks for `TouchEvent`. Library should start working on IE and Edge.
+- Exports `default` for ES6 imports.
+
 ### 1.0.7
 
 Add `touch` property to events.
