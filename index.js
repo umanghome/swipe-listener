@@ -281,6 +281,7 @@ const SwipeListener = function (element, options) {
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = SwipeListener;
+  module.exports.default = SwipeListener;
 } else {
   if (typeof define === 'function' && define.amd) {
     define([], function() {
