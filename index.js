@@ -81,7 +81,7 @@ const SwipeListener = function (element, options) {
   const _touchend = function(e) {
     if (!touches.length) return;
 
-    const touch = e instanceof TouchEvent;
+    const touch = typeof TouchEvent === 'function' && e instanceof TouchEvent;
 
     let x = [],
     y = [];
@@ -243,7 +243,7 @@ const SwipeListener = function (element, options) {
           detail: {
             x: [xs, xe],
             y: [ys, ye],
-            touch: e instanceof TouchEvent
+            touch: typeof TouchEvent === 'function' && e instanceof TouchEvent
           },
         };
       let event = new CustomEvent('swiping', eventData);

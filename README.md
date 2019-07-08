@@ -188,6 +188,7 @@ Emitted at the end of the swipe.
 # Misc
 
 - When `lockAxis` is `false`, swipes using the mouse might make multiple directions `true` even when the travel in a certain direction may not be much. You can work around this by setting `lockAxis` to `true` when the page is not being accessed from a touch-enabled device. Or, you can use `event.detail.x` and `event.detail.y` to calculate which direction has more travel and consider only that direction. Or, you can increase the values of `minVertical` and `minHorizontal`.
+- [`TouchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent/TouchEvent) is not supported in IE and Edge. Unless you have polyfilled it into the page and it's available as `TouchEvent`, swipes made using touch will not be detected as touch swipes.
 
 ---
 
