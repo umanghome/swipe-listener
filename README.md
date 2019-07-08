@@ -1,4 +1,5 @@
 # Swipe-Listener
+[![npm version](https://badge.fury.io/js/swipe-listener.svg)](https://www.npmjs.com/package/swipe-listener)
 
 Zero-dependency, minimal swipe-gesture listener for the web.
 
