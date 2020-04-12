@@ -5,7 +5,7 @@
  * @param {Object} options Optional: Options.
  * @return {Object}
  */
-const SwipeListener = function (element, options) {
+const SwipeListener = function (element, options = {}) {
   if (!element) return;
 
   // CustomEvent polyfill
@@ -34,10 +34,6 @@ const SwipeListener = function (element, options) {
     mouse: true, // Listen for mouse events
   };
 
-  // Set options
-  if (!options) {
-    options = {};
-  }
   options = {
     ...defaultOpts,
     ...options
@@ -121,11 +117,7 @@ const SwipeListener = function (element, options) {
     // Determine left or right
     let diff = x[0] - x[x.length - 1];
     let swipe = 'none';
-    if (diff > 0) {
-      swipe = 'left';
-    } else {
-      swipe = 'right';
-    }
+    swipe = (diff > 0) ? 'left' : 'right';
 
     let min = Math.min(...x),
       max = Math.max(...x),
@@ -152,11 +144,7 @@ const SwipeListener = function (element, options) {
     // Determine top or bottom
     diff = y[0] - y[y.length - 1];
     swipe = 'none';
-    if (diff > 0) {
-      swipe = 'top';
-    } else {
-      swipe = 'bottom';
-    }
+    swipe = (diff > 0) ? 'top' : 'bottom';
 
     min = Math.min(...y);
     max = Math.max(...y);
