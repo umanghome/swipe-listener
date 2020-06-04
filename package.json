@@ -1,6 +1,6 @@
 {
   "name": "swipe-listener",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Zero-dependency, minimal swipe-gesture listener for the web.",
   "main": "dist/swipe-listener.min.js",
   "scripts": {
