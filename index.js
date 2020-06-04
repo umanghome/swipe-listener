@@ -110,6 +110,7 @@ const SwipeListener = function (element, options) {
       const swipeReleaseEventData = {
         detail: {
           touch,
+          target: e.target,
           ...eventCoords
         },
       };
@@ -205,6 +206,7 @@ const SwipeListener = function (element, options) {
         detail: {
           directions,
           touch,
+          target: e.target,
           ...eventCoords
         },
       };
@@ -215,6 +217,7 @@ const SwipeListener = function (element, options) {
       let cancelEvent = new CustomEvent('swipecancel', {
         detail: {
           touch,
+          target: e.target,
           ...eventCoords,
         }
       });
@@ -243,7 +246,8 @@ const SwipeListener = function (element, options) {
           detail: {
             x: [xs, xe],
             y: [ys, ye],
-            touch: typeof TouchEvent === 'function' && e instanceof TouchEvent
+            touch: typeof TouchEvent === 'function' && e instanceof TouchEvent,
+            target: e.target
           },
         };
       let event = new CustomEvent('swiping', eventData);
