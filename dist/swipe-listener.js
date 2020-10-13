@@ -225,9 +225,6 @@ var SwipeListener = function SwipeListener(element, options) {
 
   // When a swipe is performed, store the coords.
   var _touchmove = function _touchmove(e) {
-    if (options.preventScroll) {
-      e.preventDefault();
-    }
     var touch = e.changedTouches[0];
     touches.push({
       x: touch.clientX,
@@ -251,6 +248,13 @@ var SwipeListener = function SwipeListener(element, options) {
         }
       };
       var event = new CustomEvent('swiping', eventData);
+
+      var shouldPrevent = options.preventScroll === true || typeof options.preventScroll === 'function' && options.preventScroll(event);
+
+      if (shouldPrevent) {
+        e.preventDefault();
+      }
+
       element.dispatchEvent(event);
     }
   };
