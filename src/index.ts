@@ -27,7 +27,7 @@ export interface SwipeListenerOptions {
    * Prevents scrolling when swiping.
    * @default false
    */
-  preventScroll?: boolean;
+  preventScroll?: boolean | ((event: MouseEvent | TouchEvent) => boolean);
 
   /**
    * Select only one axis to be true instead of multiple.
@@ -340,7 +340,7 @@ export default function SwipeListener(
       const shouldPrevent =
         options.preventScroll === true ||
         (typeof options.preventScroll === 'function' &&
-          options.preventScroll(event));
+          options.preventScroll(event as unknown as MouseEvent | TouchEvent));
 
       if (shouldPrevent) {
         e.preventDefault();
