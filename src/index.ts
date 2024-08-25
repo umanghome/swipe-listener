@@ -1,3 +1,64 @@
+export interface SwipeListenerOptions {
+  /**
+   * Minimum number of pixels traveled to count as a horizontal swipe.
+   * @default 10
+   */
+  minHorizontal?: number;
+
+  /**
+   * Minimum number of pixels traveled to count as a vertical swipe.
+   * @default 10
+   */
+  minVertical?: number;
+
+  /**
+   * Delta for horizontal swipe
+   * @default 3
+   */
+  deltaHorizontal?: number;
+
+  /**
+   * Delta for vertical swipe
+   * @default 5
+   */
+  deltaVertical?: number;
+
+  /**
+   * Prevents scrolling when swiping.
+   * @default false
+   */
+  preventScroll?: boolean;
+
+  /**
+   * Select only one axis to be true instead of multiple.
+   * @default true
+   */
+  lockAxis?: boolean;
+
+  /**
+   * Listen for touch events
+   * @default true
+   */
+  touch?: boolean;
+
+  /**
+   * Listen for mouse events
+   * @default true
+   */
+  mouse?: boolean;
+}
+
+const DEFAULT_OPTIONS: Required<SwipeListenerOptions> = {
+  minHorizontal: 10,
+  minVertical: 10,
+  deltaHorizontal: 3,
+  deltaVertical: 5,
+  preventScroll: false,
+  lockAxis: true,
+  touch: true,
+  mouse: true,
+};
+
 /**
  * Starts monitoring swipes on the given element and
  * emits `swipe` event when a swipe gesture is performed.
@@ -5,26 +66,21 @@
  * @param {Object} options Optional: Options.
  * @return {Object}
  */
-export default function SwipeListener(element, options) {
-  if (!element) return;
-
-  let defaultOpts = {
-    minHorizontal: 10, // Minimum number of pixels traveled to count as a horizontal swipe.
-    minVertical: 10, // Minimum number of pixels traveled to count as a vertical swipe.
-    deltaHorizontal: 3, // Delta for horizontal swipe
-    deltaVertical: 5, // Delta for vertical swipe
-    preventScroll: false, // Prevents scrolling when swiping.
-    lockAxis: true, // Select only one axis to be true instead of multiple.
-    touch: true, // Listen for touch events
-    mouse: true, // Listen for mouse events
-  };
+export default function SwipeListener(
+  element: HTMLElement,
+  options?: SwipeListenerOptions
+) {
+  if (!element) {
+    return;
+  }
 
   // Set options
   if (!options) {
     options = {};
   }
+
   options = {
-    ...defaultOpts,
+    ...DEFAULT_OPTIONS,
     ...options,
   };
 
