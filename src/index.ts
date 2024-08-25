@@ -341,17 +341,27 @@ export default function SwipeListener(
     }
   };
 
-  // Test via a getter in the options object to see if the passive property is accessed
-  let passiveOptions = false;
+  /**
+   * START: Feature detection for passive events
+   * https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md#feature-detection
+   */
+  let passiveOptions: boolean | EventListenerOptions = false;
   try {
     const testOptions = Object.defineProperty({}, 'passive', {
       get: function () {
-        passiveOptions = { passive: !options.preventScroll };
+        passiveOptions = {
+          passive: !options.preventScroll,
+        } as EventListenerOptions; // Explicit cast because `EventListenerOptions` does not have `passive` property.
       },
     });
+    // @ts-expect-error -- `testPassive` is not an actual event
     window.addEventListener('testPassive', null, testOptions);
+    // @ts-expect-error -- `testPassive` is not an actual event
     window.removeEventListener('testPassive', null, testOptions);
   } catch (e) {}
+  /**
+   * END: Feature detection for passive events
+   */
 
   if (options.touch) {
     element.addEventListener('touchmove', _touchmove, passiveOptions);
