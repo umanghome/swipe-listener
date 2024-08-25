@@ -5,7 +5,7 @@
  * @param {Object} options Optional: Options.
  * @return {Object}
  */
-const SwipeListener = function (element, options) {
+export default function SwipeListener(element, options) {
   if (!element) return;
 
   let defaultOpts = {
@@ -288,4 +288,4 @@ const SwipeListener = function (element, options) {
       element.removeEventListener('mousemove', _mousemove);
     },
   };
-};
+}
