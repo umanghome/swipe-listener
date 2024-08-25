@@ -48,6 +48,11 @@ export interface SwipeListenerOptions {
   mouse?: boolean;
 }
 
+interface Touch {
+  x: number;
+  y: number;
+}
+
 const DEFAULT_OPTIONS: Required<SwipeListenerOptions> = {
   minHorizontal: 10,
   minVertical: 10,
@@ -85,24 +90,24 @@ export default function SwipeListener(
   };
 
   // Store the touches
-  let touches = [];
+  let touches: Touch[] = [];
 
   // Not dragging by default.
   let dragging = false;
 
   // When mouse-click is started, make dragging true.
-  const _mousedown = function (e) {
+  const _mousedown = function (e: MouseEvent | TouchEvent) {
     dragging = true;
   };
 
   // When mouse-click is released, make dragging false and signify end by imitating `touchend`.
-  const _mouseup = function (e) {
+  const _mouseup = function (e: MouseEvent | TouchEvent) {
     dragging = false;
     _touchend(e);
   };
 
   // When mouse is moved while being clicked, imitate a `touchmove`.
-  const _mousemove = function (e) {
+  const _mousemove = function (e: MouseEvent | TouchEvent) {
     if (dragging) {
       e.changedTouches = [
         {
@@ -121,7 +126,7 @@ export default function SwipeListener(
   }
 
   // When the swipe is completed, calculate the direction.
-  const _touchend = function (e) {
+  const _touchend = function (e: MouseEvent | TouchEvent) {
     if (!touches.length) return;
 
     const touch = typeof TouchEvent === 'function' && e instanceof TouchEvent;
@@ -181,17 +186,26 @@ export default function SwipeListener(
       _diff;
 
     // If minimum horizontal distance was travelled
-    if (Math.abs(diff) >= options.minHorizontal) {
+    if (
+      typeof options.minHorizontal === 'number' &&
+      Math.abs(diff) >= options.minHorizontal
+    ) {
       switch (swipe) {
         case 'left':
           _diff = Math.abs(min - x[x.length - 1]);
-          if (_diff <= options.deltaHorizontal) {
+          if (
+            typeof options.deltaHorizontal === 'number' &&
+            _diff <= options.deltaHorizontal
+          ) {
             directions.left = true;
           }
           break;
         case 'right':
           _diff = Math.abs(max - x[x.length - 1]);
-          if (_diff <= options.deltaHorizontal) {
+          if (
+            typeof options.deltaHorizontal === 'number' &&
+            _diff <= options.deltaHorizontal
+          ) {
             directions.right = true;
           }
           break;
@@ -211,17 +225,26 @@ export default function SwipeListener(
     max = Math.max(...y);
 
     // If minimum vertical distance was travelled
-    if (Math.abs(diff) >= options.minVertical) {
+    if (
+      typeof options.minVertical === 'number' &&
+      Math.abs(diff) >= options.minVertical
+    ) {
       switch (swipe) {
         case 'top':
           _diff = Math.abs(min - y[y.length - 1]);
-          if (_diff <= options.deltaVertical) {
+          if (
+            typeof options.deltaVertical === 'number' &&
+            _diff <= options.deltaVertical
+          ) {
             directions.top = true;
           }
           break;
         case 'bottom':
           _diff = Math.abs(max - y[y.length - 1]);
-          if (_diff <= options.deltaVertical) {
+          if (
+            typeof options.deltaVertical === 'number' &&
+            _diff <= options.deltaVertical
+          ) {
             directions.bottom = true;
           }
           break;
@@ -282,7 +305,7 @@ export default function SwipeListener(
   };
 
   // When a swipe is performed, store the coords.
-  const _touchmove = function (e) {
+  const _touchmove = function (e: MouseEvent | TouchEvent) {
     let touch = e.changedTouches[0];
     touches.push({
       x: touch.clientX,
