@@ -7,13 +7,13 @@ export default {
   input: 'src/index.ts',
   output: [
     {
-      file: 'dist/swipe-listener.umd.js',
+      file: 'dist/swipe-listener.js',
       format: 'umd',
       name: 'SwipeListener',
       sourcemap: true,
     },
     {
-      file: 'dist/swipe-listener.esm.js',
+      file: 'dist/swipe-listener.mjs',
       format: 'esm',
       sourcemap: true,
     },
