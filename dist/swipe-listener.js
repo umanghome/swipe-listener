@@ -1,7 +1,11 @@
-'use strict';
+"use strict";
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /**
  * Starts monitoring swipes on the given element and
  * emits `swipe` event when a swipe gesture is performed.
@@ -17,7 +21,11 @@ var SwipeListener = function SwipeListener(element, options) {
     (function () {
       if (typeof window.CustomEvent === 'function') return false;
       function CustomEvent(event, params) {
-        params = params || { bubbles: false, cancelable: false, detail: undefined };
+        params = params || {
+          bubbles: false,
+          cancelable: false,
+          detail: undefined
+        };
         var evt = document.createEvent('CustomEvent');
         evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
         return evt;
@@ -26,15 +34,21 @@ var SwipeListener = function SwipeListener(element, options) {
       window.CustomEvent = CustomEvent;
     })();
   }
-
   var defaultOpts = {
-    minHorizontal: 10, // Minimum number of pixels traveled to count as a horizontal swipe.
-    minVertical: 10, // Minimum number of pixels traveled to count as a vertical swipe.
-    deltaHorizontal: 3, // Delta for horizontal swipe
-    deltaVertical: 5, // Delta for vertical swipe
-    preventScroll: false, // Prevents scrolling when swiping.
-    lockAxis: true, // Select only one axis to be true instead of multiple.
-    touch: true, // Listen for touch events
+    minHorizontal: 10,
+    // Minimum number of pixels traveled to count as a horizontal swipe.
+    minVertical: 10,
+    // Minimum number of pixels traveled to count as a vertical swipe.
+    deltaHorizontal: 3,
+    // Delta for horizontal swipe
+    deltaVertical: 5,
+    // Delta for vertical swipe
+    preventScroll: false,
+    // Prevents scrolling when swiping.
+    lockAxis: true,
+    // Select only one axis to be true instead of multiple.
+    touch: true,
+    // Listen for touch events
     mouse: true // Listen for mouse events
   };
 
@@ -42,7 +56,7 @@ var SwipeListener = function SwipeListener(element, options) {
   if (!options) {
     options = {};
   }
-  options = _extends({}, defaultOpts, options);
+  options = _objectSpread(_objectSpread({}, defaultOpts), options);
 
   // Store the touches
   var touches = [];
@@ -71,7 +85,6 @@ var SwipeListener = function SwipeListener(element, options) {
       _touchmove(e);
     }
   };
-
   if (options.mouse) {
     element.addEventListener('mousedown', _mousedown);
     element.addEventListener('mouseup', _mouseup);
@@ -81,43 +94,36 @@ var SwipeListener = function SwipeListener(element, options) {
   // When the swipe is completed, calculate the direction.
   var _touchend = function _touchend(e) {
     if (!touches.length) return;
-
     var touch = typeof TouchEvent === 'function' && e instanceof TouchEvent;
-
     var x = [],
-        y = [];
-
+      y = [];
     var directions = {
       top: false,
       right: false,
       bottom: false,
       left: false
     };
-
     for (var i = 0; i < touches.length; i++) {
       x.push(touches[i].x);
       y.push(touches[i].y);
     }
-
     var xs = x[0],
-        xe = x[x.length - 1],
-        // Start and end x-coords
-    ys = y[0],
-        ye = y[y.length - 1]; // Start and end y-coords
+      xe = x[x.length - 1],
+      // Start and end x-coords
+      ys = y[0],
+      ye = y[y.length - 1]; // Start and end y-coords
 
     var eventCoords = {
       x: [xs, xe],
       y: [ys, ye]
     };
-
     if (touches.length > 1) {
       var swipeReleaseEventData = {
-        detail: _extends({
+        detail: _objectSpread({
           touch: touch,
           target: e.target
         }, eventCoords)
       };
-
       var swipeReleaseEvent = new CustomEvent('swiperelease', swipeReleaseEventData);
       element.dispatchEvent(swipeReleaseEvent);
     }
@@ -130,10 +136,9 @@ var SwipeListener = function SwipeListener(element, options) {
     } else {
       swipe = 'right';
     }
-
     var min = Math.min.apply(Math, x),
-        max = Math.max.apply(Math, x),
-        _diff = void 0;
+      max = Math.max.apply(Math, x),
+      _diff;
 
     // If minimum horizontal distance was travelled
     if (Math.abs(diff) >= options.minHorizontal) {
@@ -161,7 +166,6 @@ var SwipeListener = function SwipeListener(element, options) {
     } else {
       swipe = 'bottom';
     }
-
     min = Math.min.apply(Math, y);
     max = Math.max.apply(Math, y);
 
@@ -201,20 +205,18 @@ var SwipeListener = function SwipeListener(element, options) {
           directions.left = directions.right = false;
         }
       }
-
       var eventData = {
-        detail: _extends({
+        detail: _objectSpread({
           directions: directions,
           touch: touch,
           target: e.target
         }, eventCoords)
       };
-
       var event = new CustomEvent('swipe', eventData);
       element.dispatchEvent(event);
     } else {
       var cancelEvent = new CustomEvent('swipecancel', {
-        detail: _extends({
+        detail: _objectSpread({
           touch: touch,
           target: e.target
         }, eventCoords)
@@ -234,27 +236,24 @@ var SwipeListener = function SwipeListener(element, options) {
     // Emit a `swiping` event if there are more than one touch-points.
     if (touches.length > 1) {
       var xs = touches[0].x,
-          // Start and end x-coords
-      xe = touches[touches.length - 1].x,
-          ys = touches[0].y,
-          // Start and end y-coords
-      ye = touches[touches.length - 1].y,
-          eventData = {
-        detail: {
-          x: [xs, xe],
-          y: [ys, ye],
-          touch: typeof TouchEvent === 'function' && e instanceof TouchEvent,
-          target: e.target
-        }
-      };
+        // Start and end x-coords
+        xe = touches[touches.length - 1].x,
+        ys = touches[0].y,
+        // Start and end y-coords
+        ye = touches[touches.length - 1].y,
+        eventData = {
+          detail: {
+            x: [xs, xe],
+            y: [ys, ye],
+            touch: typeof TouchEvent === 'function' && e instanceof TouchEvent,
+            target: e.target
+          }
+        };
       var event = new CustomEvent('swiping', eventData);
-
       var shouldPrevent = options.preventScroll === true || typeof options.preventScroll === 'function' && options.preventScroll(event);
-
       if (shouldPrevent) {
         e.preventDefault();
       }
-
       element.dispatchEvent(event);
     }
   };
@@ -264,18 +263,18 @@ var SwipeListener = function SwipeListener(element, options) {
   try {
     var testOptions = Object.defineProperty({}, 'passive', {
       get: function get() {
-        passiveOptions = { passive: !options.preventScroll };
+        passiveOptions = {
+          passive: !options.preventScroll
+        };
       }
     });
     window.addEventListener('testPassive', null, testOptions);
     window.removeEventListener('testPassive', null, testOptions);
   } catch (e) {}
-
   if (options.touch) {
     element.addEventListener('touchmove', _touchmove, passiveOptions);
     element.addEventListener('touchend', _touchend);
   }
-
   return {
     off: function off() {
       element.removeEventListener('touchmove', _touchmove, passiveOptions);
@@ -286,10 +285,9 @@ var SwipeListener = function SwipeListener(element, options) {
     }
   };
 };
-
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports = SwipeListener;
-  module.exports.default = SwipeListener;
+  module.exports["default"] = SwipeListener;
 } else {
   if (typeof define === 'function' && define.amd) {
     define([], function () {
