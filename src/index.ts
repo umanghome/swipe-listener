@@ -8,21 +8,6 @@
 const SwipeListener = function (element, options) {
   if (!element) return;
 
-  // CustomEvent polyfill
-  if (typeof window !== 'undefined') {
-    (function() {
-      if (typeof window.CustomEvent === 'function') return false;
-      function CustomEvent(event, params) {
-        params = params || { bubbles: false, cancelable: false, detail: undefined };
-        var evt = document.createEvent('CustomEvent');
-        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-        return evt;
-      }
-      CustomEvent.prototype = window.Event.prototype;
-      window.CustomEvent = CustomEvent;
-    })();
-  }
-
   let defaultOpts = {
     minHorizontal: 10, // Minimum number of pixels traveled to count as a horizontal swipe.
     minVertical: 10, // Minimum number of pixels traveled to count as a vertical swipe.
@@ -40,7 +25,7 @@ const SwipeListener = function (element, options) {
   }
   options = {
     ...defaultOpts,
-    ...options
+    ...options,
   };
 
   // Store the touches
@@ -52,24 +37,26 @@ const SwipeListener = function (element, options) {
   // When mouse-click is started, make dragging true.
   const _mousedown = function (e) {
     dragging = true;
-  }
+  };
 
   // When mouse-click is released, make dragging false and signify end by imitating `touchend`.
   const _mouseup = function (e) {
     dragging = false;
     _touchend(e);
-  }
+  };
 
   // When mouse is moved while being clicked, imitate a `touchmove`.
   const _mousemove = function (e) {
     if (dragging) {
-      e.changedTouches = [{
-        clientX: e.clientX,
-        clientY: e.clientY
-      }];
+      e.changedTouches = [
+        {
+          clientX: e.clientX,
+          clientY: e.clientY,
+        },
+      ];
       _touchmove(e);
     }
-  }
+  };
 
   if (options.mouse) {
     element.addEventListener('mousedown', _mousedown);
@@ -78,19 +65,19 @@ const SwipeListener = function (element, options) {
   }
 
   // When the swipe is completed, calculate the direction.
-  const _touchend = function(e) {
+  const _touchend = function (e) {
     if (!touches.length) return;
 
     const touch = typeof TouchEvent === 'function' && e instanceof TouchEvent;
 
     let x = [],
-    y = [];
+      y = [];
 
     let directions = {
       top: false,
       right: false,
       bottom: false,
-      left: false
+      left: false,
     };
 
     for (let i = 0; i < touches.length; i++) {
@@ -98,12 +85,14 @@ const SwipeListener = function (element, options) {
       y.push(touches[i].y);
     }
 
-    const xs = x[0], xe = x[x.length - 1], // Start and end x-coords
-    ys = y[0], ye = y[y.length - 1];  // Start and end y-coords
+    const xs = x[0],
+      xe = x[x.length - 1], // Start and end x-coords
+      ys = y[0],
+      ye = y[y.length - 1]; // Start and end y-coords
 
     const eventCoords = {
       x: [xs, xe],
-      y: [ys, ye]
+      y: [ys, ye],
     };
 
     if (touches.length > 1) {
@@ -111,11 +100,14 @@ const SwipeListener = function (element, options) {
         detail: {
           touch,
           target: e.target,
-          ...eventCoords
+          ...eventCoords,
         },
       };
 
-      let swipeReleaseEvent = new CustomEvent('swiperelease', swipeReleaseEventData);
+      let swipeReleaseEvent = new CustomEvent(
+        'swiperelease',
+        swipeReleaseEventData
+      );
       element.dispatchEvent(swipeReleaseEvent);
     }
 
@@ -184,21 +176,29 @@ const SwipeListener = function (element, options) {
     touches = [];
 
     // If there is a swipe direction, emit an event.
-    if (directions.top ||
+    if (
+      directions.top ||
       directions.right ||
       directions.bottom ||
-      directions.left) {
+      directions.left
+    ) {
       /**
-      * If lockAxis is true, determine which axis to select.
-      * The axis with the most travel is selected.
-      * TODO: Factor in for the orientation of the device
-      * and use it as a weight to determine the travel along an axis.
-      */
+       * If lockAxis is true, determine which axis to select.
+       * The axis with the most travel is selected.
+       * TODO: Factor in for the orientation of the device
+       * and use it as a weight to determine the travel along an axis.
+       */
       if (options.lockAxis) {
-        if ((directions.left || directions.right) && Math.abs(xs - xe) > Math.abs(ys - ye)) {
+        if (
+          (directions.left || directions.right) &&
+          Math.abs(xs - xe) > Math.abs(ys - ye)
+        ) {
           directions.top = directions.bottom = false;
-        } else if ((directions.top || directions.bottom) && Math.abs(xs - xe) < Math.abs(ys - ye)) {
-          directions.left = directions.right =  false;
+        } else if (
+          (directions.top || directions.bottom) &&
+          Math.abs(xs - xe) < Math.abs(ys - ye)
+        ) {
+          directions.left = directions.right = false;
         }
       }
 
@@ -207,7 +207,7 @@ const SwipeListener = function (element, options) {
           directions,
           touch,
           target: e.target,
-          ...eventCoords
+          ...eventCoords,
         },
       };
 
@@ -219,7 +219,7 @@ const SwipeListener = function (element, options) {
           touch,
           target: e.target,
           ...eventCoords,
-        }
+        },
       });
       element.dispatchEvent(cancelEvent);
     }
@@ -230,7 +230,7 @@ const SwipeListener = function (element, options) {
     let touch = e.changedTouches[0];
     touches.push({
       x: touch.clientX,
-      y: touch.clientY
+      y: touch.clientY,
     });
 
     // Emit a `swiping` event if there are more than one touch-points.
@@ -244,29 +244,31 @@ const SwipeListener = function (element, options) {
             x: [xs, xe],
             y: [ys, ye],
             touch: typeof TouchEvent === 'function' && e instanceof TouchEvent,
-            target: e.target
+            target: e.target,
           },
         };
       let event = new CustomEvent('swiping', eventData);
 
-      const shouldPrevent = options.preventScroll === true ||
-         (typeof options.preventScroll === 'function' && options.preventScroll(event));
+      const shouldPrevent =
+        options.preventScroll === true ||
+        (typeof options.preventScroll === 'function' &&
+          options.preventScroll(event));
 
-      if(shouldPrevent) {
-          e.preventDefault();
+      if (shouldPrevent) {
+        e.preventDefault();
       }
 
       element.dispatchEvent(event);
     }
-  }
+  };
 
   // Test via a getter in the options object to see if the passive property is accessed
   let passiveOptions = false;
   try {
     const testOptions = Object.defineProperty({}, 'passive', {
       get: function () {
-        passiveOptions = {passive: !options.preventScroll};
-      }
+        passiveOptions = { passive: !options.preventScroll };
+      },
     });
     window.addEventListener('testPassive', null, testOptions);
     window.removeEventListener('testPassive', null, testOptions);
@@ -284,8 +286,8 @@ const SwipeListener = function (element, options) {
       element.removeEventListener('mousedown', _mousedown);
       element.removeEventListener('mouseup', _mouseup);
       element.removeEventListener('mousemove', _mousemove);
-    }
-  }
+    },
+  };
 };
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
@@ -293,7 +295,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
   module.exports.default = SwipeListener;
 } else {
   if (typeof define === 'function' && define.amd) {
-    define([], function() {
+    define([], function () {
       return SwipeListener;
     });
   } else {
