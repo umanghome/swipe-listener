@@ -1,5 +1,17 @@
 # Changelog
 
+### 1.3.1
+
+- Repo improvements, package upgrades
+
+### 1.3.0
+
+- Allow `preventScroll` to be a function ([#33](https://github.com/umanghome/swipe-listener/pull/33))
+
+### 1.2.0
+
+- Added e.target to the details object for the dispatched event ([#28](https://github.com/umanghome/swipe-listener/pull/28))
+
 ### 1.1.0
 
 - `main` in `package.json` refers to `dist/swipe-listener.min.js` instead of `index.js`. Transpiled version would be served directly.
