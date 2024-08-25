@@ -96,26 +96,31 @@ export default function SwipeListener(
   let dragging = false;
 
   // When mouse-click is started, make dragging true.
-  const _mousedown = function (e: MouseEvent | TouchEvent) {
+  const _mousedown = function (e: MouseEvent) {
     dragging = true;
   };
 
   // When mouse-click is released, make dragging false and signify end by imitating `touchend`.
-  const _mouseup = function (e: MouseEvent | TouchEvent) {
+  const _mouseup = function (e: MouseEvent) {
     dragging = false;
     _touchend(e);
   };
 
   // When mouse is moved while being clicked, imitate a `touchmove`.
-  const _mousemove = function (e: MouseEvent | TouchEvent) {
+  const _mousemove = function (
+    e: Pick<MouseEvent, 'target' | 'preventDefault' | 'clientX' | 'clientY'>
+  ) {
     if (dragging) {
-      e.changedTouches = [
-        {
-          clientX: e.clientX,
-          clientY: e.clientY,
-        },
-      ];
-      _touchmove(e);
+      _touchmove({
+        ...e,
+        changedTouches: [
+          // @ts-expect-error -- We only care about a few properties
+          {
+            clientX: e.clientX,
+            clientY: e.clientY,
+          },
+        ],
+      });
     }
   };
 
@@ -126,8 +131,10 @@ export default function SwipeListener(
   }
 
   // When the swipe is completed, calculate the direction.
-  const _touchend = function (e: MouseEvent | TouchEvent) {
-    if (!touches.length) return;
+  const _touchend = function (e: Pick<TouchEvent, 'target'>) {
+    if (!touches.length) {
+      return;
+    }
 
     const touch = typeof TouchEvent === 'function' && e instanceof TouchEvent;
 
@@ -305,7 +312,9 @@ export default function SwipeListener(
   };
 
   // When a swipe is performed, store the coords.
-  const _touchmove = function (e: MouseEvent | TouchEvent) {
+  const _touchmove = function (
+    e: Pick<TouchEvent, 'target' | 'preventDefault' | 'changedTouches'>
+  ) {
     let touch = e.changedTouches[0];
     touches.push({
       x: touch.clientX,
