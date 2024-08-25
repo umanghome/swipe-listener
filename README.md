@@ -1,4 +1,5 @@
 # Swipe-Listener
+
 [![npm version](https://badge.fury.io/js/swipe-listener.svg)](https://www.npmjs.com/package/swipe-listener)
 
 Zero-dependency, minimal swipe-gesture listener for the web.
@@ -73,7 +74,7 @@ container.addEventListener('swipe', function (e) {
 </script>
 ```
 
-Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@1.2.0/dist/swipe-listener.min.js`](https://unpkg.com/swipe-listener@1.2.0/dist/swipe-listener.min.js)
+Swipe-listener is also available from unpkg: [`https://unpkg.com/swipe-listener@1.3.1/dist/swipe-listener.min.js`](https://unpkg.com/swipe-listener@1.3.1/dist/swipe-listener.min.js)
 
 ## Installing using NPM
 
@@ -113,16 +114,16 @@ Data passed to `event.detail`:
 
 ### Options
 
-| Key | Description | Default value |
-| --- | --- | --- |
-| `minHorizontal` | Minimum number of horizontal pixels travelled for the gesture to be considered as a left or right swipe. | `10` |
-| `minVertical` | Minimum number of vertical pixels travelled for the gesture to be considered as a top or bottom swipe. | `10` |
-| `deltaHorizontal` | Maximum difference between the rightmost pixel (right-swipe) or the leftmost pixel (left-swipe) travelled to and the pixel at which the gesture is released. | `3` |
-| `deltaVertical` | Maximum difference between the bottommost pixel (bottom-swipe) or the topmost pixel (top-swipe) travelled to and the pixel at which the gesture is released. | `5` |
-| `preventScroll` | Prevents page scrolling when swiping on the DOM element.  Can also be specified as a function with the signature `(event) => boolean` | `false` |
-| `lockAxis` | Enforces only one direction to be true instead of multiple. Selects the direction with the most travel. Is not enforced when the travel is equal. Example: for a top-left swipe, only one of `top` and `left` will be `true` instead of both. | `true` |
-| `touch` | Whether to listen for swipes with touch events | `true` |
-| `mouse` | Whether to listen for swipes with mouse events | `true` |
+| Key               | Description                                                                                                                                                                                                                                   | Default value |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `minHorizontal`   | Minimum number of horizontal pixels travelled for the gesture to be considered as a left or right swipe.                                                                                                                                      | `10`          |
+| `minVertical`     | Minimum number of vertical pixels travelled for the gesture to be considered as a top or bottom swipe.                                                                                                                                        | `10`          |
+| `deltaHorizontal` | Maximum difference between the rightmost pixel (right-swipe) or the leftmost pixel (left-swipe) travelled to and the pixel at which the gesture is released.                                                                                  | `3`           |
+| `deltaVertical`   | Maximum difference between the bottommost pixel (bottom-swipe) or the topmost pixel (top-swipe) travelled to and the pixel at which the gesture is released.                                                                                  | `5`           |
+| `preventScroll`   | Prevents page scrolling when swiping on the DOM element. Can also be specified as a function with the signature `(event) => boolean`                                                                                                          | `false`       |
+| `lockAxis`        | Enforces only one direction to be true instead of multiple. Selects the direction with the most travel. Is not enforced when the travel is equal. Example: for a top-left swipe, only one of `top` and `left` will be `true` instead of both. | `true`        |
+| `touch`           | Whether to listen for swipes with touch events                                                                                                                                                                                                | `true`        |
+| `mouse`           | Whether to listen for swipes with mouse events                                                                                                                                                                                                | `true`        |
 
 ### `.off()`
 
@@ -143,12 +144,12 @@ Emitted once a swipe is completed.
 
 `event.detail` contains
 
-| key | type | description |
-| --- | --- | --- |
-| `directions` | Object | Object containing `top`, `left`, `bottom`, `right` keys. The directions in which the swipe is performed are set to `true`. |
-| `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
-| `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
-| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event. |
+| key          | type    | description                                                                                                                |
+| ------------ | ------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `directions` | Object  | Object containing `top`, `left`, `bottom`, `right` keys. The directions in which the swipe is performed are set to `true`. |
+| `x`          | Array   | Array of two items: the starting x-coordinate and the ending x-coordinate.                                                 |
+| `y`          | Array   | Array of two items: the starting y-coordinate and the ending y-coordinate.                                                 |
+| `touch`      | Boolean | Whether or not `TouchEvent` was used for this particular event.                                                            |
 
 ### `swiping` - Emitted while a swipe is being performed.
 
@@ -156,11 +157,11 @@ Emitted multiple times during a single swipe.
 
 `event.detail` contains
 
-| key | type | description |
-| --- | --- | --- |
-| `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
-| `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
-| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event. |
+| key     | type    | description                                                                |
+| ------- | ------- | -------------------------------------------------------------------------- |
+| `x`     | Array   | Array of two items: the starting x-coordinate and the ending x-coordinate. |
+| `y`     | Array   | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event.            |
 
 ### `swiperelease` - Emitted once the swipe is released/completed.
 
@@ -168,11 +169,11 @@ Emitted at the end of the swipe.
 
 `event.detail` contains
 
-| key | type | description |
-| --- | --- | --- |
-| `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
-| `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
-| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event. |
+| key     | type    | description                                                                |
+| ------- | ------- | -------------------------------------------------------------------------- |
+| `x`     | Array   | Array of two items: the starting x-coordinate and the ending x-coordinate. |
+| `y`     | Array   | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event.            |
 
 ### `swipecancel` - Emitted if the swipe-distance did not meet minimum travel-distance.
 
@@ -180,11 +181,11 @@ Emitted at the end of the swipe.
 
 `event.detail` contains
 
-| key | type | description |
-| --- | --- | --- |
-| `x` | Array | Array of two items: the starting x-coordinate and the ending x-coordinate. |
-| `y` | Array | Array of two items: the starting y-coordinate and the ending y-coordinate. |
-| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event. |
+| key     | type    | description                                                                |
+| ------- | ------- | -------------------------------------------------------------------------- |
+| `x`     | Array   | Array of two items: the starting x-coordinate and the ending x-coordinate. |
+| `y`     | Array   | Array of two items: the starting y-coordinate and the ending y-coordinate. |
+| `touch` | Boolean | Whether or not `TouchEvent` was used for this particular event.            |
 
 # Misc
 
