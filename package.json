@@ -4,7 +4,7 @@
   "description": "Zero-dependency, minimal swipe-gesture listener for the web.",
   "main": "dist/swipe-listener.min.js",
   "scripts": {
-    "build": "babel index.js --out-file dist/swipe-listener.js && babel-minify dist/swipe-listener.js --out-file dist/swipe-listener.min.js",
+    "build": "rm -rf dist && rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,10 +28,12 @@
   },
   "homepage": "https://github.com/umanghome/swipe-listener",
   "devDependencies": {
-    "@babel/cli": "7.24.8",
-    "@babel/core": "7.25.2",
-    "@babel/plugin-proposal-object-rest-spread": "7.20.7",
-    "@babel/preset-env": "7.25.4",
-    "babel-minify": "0.5.2"
+    "@rollup/plugin-commonjs": "26.0.1",
+    "@rollup/plugin-node-resolve": "15.2.3",
+    "@rollup/plugin-typescript": "11.1.6",
+    "rollup": "2.79.1",
+    "rollup-plugin-terser": "7.0.2",
+    "tslib": "2.7.0",
+    "typescript": "5.5.4"
   }
 }
