@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.3.1
+
+- Repo improvements, package upgrades
+
 ### 1.3.0
 
 - Allow `preventScroll` to be a function ([#33](https://github.com/umanghome/swipe-listener/pull/33))
